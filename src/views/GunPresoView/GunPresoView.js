@@ -5,6 +5,7 @@ import { actions as counterActions } from '../../redux/modules/presentation'
 import classes from './GunPresoView.scss'
 import Presentation from '../../components/Presentation'
 import Slide from '../../components/Slide'
+import connectToResize from '../../mixins/Resizing'
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -49,4 +50,6 @@ export class GunPresoView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(GunPresoView)
+export const ResizingGunPresoView = connectToResize(GunPresoView)
+
+export default connect(mapStateToProps, counterActions)(ResizingGunPresoView)

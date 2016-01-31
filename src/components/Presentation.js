@@ -9,13 +9,6 @@ import invariant from 'invariant'
 
 export default class Presentation extends React.Component {
   // mixins: [FluxMixin, ResizingMixin, StoreWatchMixin("PresentationStore")],
-  // getDefaultProps() {
-  //   return {
-  //     flux,
-  //     slideWidth: 1280,
-  //     slideHeight: 768
-  //   }
-  // }
 
   // normalizeChildren(children) {
   //   var count = React.Children.count(children)
@@ -66,7 +59,7 @@ export default class Presentation extends React.Component {
     var classNames = classes['react-presentation'] + ' ' + classes[renderer]
     return (
       <div className = {classNames}>
-        <Renderer sizes = {this.getSizes()} currentSlide = {this.props.slideIndex} allSlides = {this.props.children}></Renderer>
+        <Renderer sizes = {this.getSizes()} currentSlide = {this.props.children[this.props.slideIndex]} allSlides = {this.props.children}></Renderer>
       </div>
     )
   }
