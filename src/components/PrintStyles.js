@@ -1,15 +1,26 @@
-export default class PagePrinter {
-  constructor (sizes) {
-    this.sizes = sizes
-  }
+import React, {PropTypes} from 'react'
 
-  attach () {
-    this.style = document.createElement('style')
-    document.head.appendChild(this.style)
-    this.style.innerHTML = '@page {size: ' + this.sizes.width + 'px ' + this.sizes.height + 'px}'
-  }
+export default function connectPrintStyles (Component) {
+  const PrintStyles = React.createClass({
+    propTypes: {
+      slideWidth: PropTypes.number.isRequired,
+      slideHeight: PropTypes.number.isRequired
+    },
 
-  detach () {
-    this.style.remove()
-  }
+    componentDidMount () {
+      this.style = document.createElement('style')
+      document.head.appendChild(this.style)
+      this.style.innerHTML = '@page {size: ' + this.props.slideWidth + 'px ' + this.props.slideHeight + 'px}'
+    },
+
+    componentWillUnmount () {
+      this.style.remove()
+    },
+
+    render () {
+      return <Component {...this.props} {...this.state} />
+    }
+  })
+
+  return PrintStyles
 }

@@ -6,6 +6,7 @@ import keymaster from 'keymaster'
 import classes from './Presentation.scss'
 import invariant from 'invariant'
 import connectToResize from './Resizing'
+import connectPrintStyles from './PrintStyles'
 
 export class Presentation extends React.Component {
   // normalizeChildren(children) {
@@ -63,5 +64,5 @@ export class Presentation extends React.Component {
   }
 }
 
-export default connectToResize(Presentation)
+export default connectPrintStyles(connectToResize(Presentation))
 
