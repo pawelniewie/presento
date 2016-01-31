@@ -55,6 +55,8 @@
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "history": "^2.0.0-rc2",
+    "invariant": "^2.2.0",
+    "keymaster": "^1.6.2",
     "koa": "^2.0.0-alpha.3",
     "koa-connect-history-api-fallback": "^0.3.0",
     "koa-convert": "^1.2.0",

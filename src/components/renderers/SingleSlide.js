@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import classes from './SingleSlide.scss'
 
 export default class SingleSlide extends React.Component {
   static propTypes = {
@@ -7,8 +8,10 @@ export default class SingleSlide extends React.Component {
   };
 
   render () {
-    return <div className = 'slide-wrapper' style = {this.props.sizes}>
-      { this.props.currentSlide }
-    </div>
+    return (
+      <div className = {classes['slide-wrapper']} style = {this.props.sizes}>
+        { this.props.currentSlide }
+      </div>
+    )
   }
 }

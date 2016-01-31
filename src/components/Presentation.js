@@ -1,15 +1,10 @@
 import React from 'react'
-// var actions = require('../config/actions.jsx')
-// var Fluxxor = require('fluxxor')
-// var FluxMixin = Fluxxor.FluxMixin(React)
-// var StoreWatchMixin = Fluxxor.StoreWatchMixin
-// var PresentationStore = require('../stores/PresentationStore.jsx')
-// var ShortcutStore = require('../stores/ShortcutStore.jsx')
 // var History = require('../modules/History.jsx')
 // var PrintStyles = require('../modules/PrintStyles.jsx')
 import renderers from './renderers/renderers'
+import keymaster from 'keymaster'
 import classes from './Presentation.scss'
-// var invariant = require('invariant')
+import invariant from 'invariant'
 // var ResizingMixin = require('../mixins/Resizing.jsx')
 
 export default class Presentation extends React.Component {
@@ -31,23 +26,31 @@ export default class Presentation extends React.Component {
   //   return count === 1 ? [children] : children
   // }
 
-  // componentDidMount() {
-  //   this.getFlux().actions.updateSlides(this.normalizeChildren(this.props.children))
-  //   this.history = new History(flux.store('PresentationStore'), flux.actions.updateSlideIndex)
-  //   this.history.attach()
+  getShortcuts () {
+    return {
+      'page down': this.props.nextSlide,
+      'right': this.props.nextSlide,
+      'page up': this.props.previousSlide,
+      'left': this.props.previousSlide,
+      's': this.props.useSingleRenderer,
+      'b': this.props.useBookletRenderer,
+      'p': this.props.usePreviewRenderer
+    }
+  }
 
-  //   this.printStyles = new PrintStyles(this.getSizes())
-  //   this.printStyles.attach()
-  // }
+  componentDidMount () {
+    const shortcuts = this.getShortcuts()
+    Object.keys(shortcuts).map((shortcut) => {
+      keymaster(shortcut, () => {
+        shortcuts[shortcut]()
+      })
+    })
+  }
 
-  // componentWillUnmount() {
-  //   this.history.detach()
-  //   this.printStyles.detach()
-  // }
-
-  // getStateFromFlux() {
-  //   return this.getFlux().store("PresentationStore").getState()
-  // }
+  componentWillUnmount () {
+    const shortcuts = this.getShortcuts()
+    Object.keys(shortcuts).each((key) => keymaster.unbind(key))
+  }
 
   getSizes () {
     return {
@@ -57,8 +60,8 @@ export default class Presentation extends React.Component {
   }
 
   render () {
-    const renderer = (this.state || {}).renderer || 'booklet'
-    // invariant(renderers[renderer], 'Invalid renderer: "%s"', renderer)
+    const renderer = this.props.renderer
+    invariant(renderers[renderer], 'Invalid renderer: "%s"', renderer)
     var Renderer = renderers[renderer]
     var classNames = classes['react-presentation'] + ' ' + classes[renderer]
     return (

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { actions as counterActions } from '../../redux/modules/counter'
+import { actions as counterActions } from '../../redux/modules/presentation'
 import classes from './GunPresoView.scss'
 import Presentation from '../../components/Presentation'
 import Slide from '../../components/Slide'
@@ -12,8 +12,11 @@ import Slide from '../../components/Slide'
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
-  allSlides: state.counter.allSlides,
-  slideIndex: state.counter.slideIndex
+  allSlides: state.presentation.allSlides,
+  slideIndex: state.presentation.slideIndex,
+  slideWidth: state.presentation.slideWidth,
+  slideHeight: state.presentation.slideHeight,
+  renderer: state.presentation.renderer
 })
 export class GunPresoView extends React.Component {
   static propTypes = {

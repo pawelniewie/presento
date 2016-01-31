@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
+import classes from './Booklet.scss'
 
 export default class Booklet extends React.Component {
   static propTypes = {
@@ -11,12 +12,12 @@ export default class Booklet extends React.Component {
   render () {
     var currentSlide = this.props.currentSlide
     var slides = this.props.allSlides.map(slide => {
-      var classes = classNames({
-        'slide-wrapper': true,
+      var className = classNames({
+        [classes['slide-wrapper']]: true,
         'current': (slide === currentSlide)
       })
       return (
-        <div className = {classes} style = {this.props.sizes}>
+        <div className = {className} style = {this.props.sizes}>
           {slide}
         </div>
       )
