@@ -1,0 +1,18 @@
+box: 0xf0/node-phantomjs
+build:
+  steps:
+    - script:
+        code: export NODE_ENV=development
+    - wercker/install-packages:
+        packages: npm
+    - npm-install
+    - script:
+        code: NODE_ENV=production npm run deploy
+    - script:
+        code: cp -R dist "$WERCKER_OUTPUT_DIR"
+
+deploy:
+  steps:
+    - ematsen/gh-pages:
+        token: $GITHUB_TOKEN
+        path: dist
