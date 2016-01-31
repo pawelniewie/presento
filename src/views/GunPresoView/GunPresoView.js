@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { actions as counterActions } from '../../redux/modules/presentation'
-import classes from './GunPresoView.scss'
+// import classes from './GunPresoView.scss'
 import Presentation from '../../components/Presentation'
 import Slide from '../../components/Slide'
 

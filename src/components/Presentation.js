@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import renderers from './renderers/renderers'
 import keymaster from 'keymaster'
 import classes from './Presentation.scss'
@@ -7,6 +7,22 @@ import connectToResize from './Resizing'
 import connectPrintStyles from './PrintStyles'
 
 export class Presentation extends React.Component {
+  static propTypes = {
+    renderer: PropTypes.string.isRequired,
+    slideWidth: PropTypes.number.isRequired,
+    slideHeight: PropTypes.number.isRequired,
+    currentIndex: PropTypes.number.isRequired,
+    currentSlide: PropTypes.element.isRequired,
+    nextSlide: PropTypes.func.isRequired,
+    previousSlide: PropTypes.func.isRequired,
+    useSingleRenderer: PropTypes.func.isRequired,
+    useBookletRenderer: PropTypes.func.isRequired,
+    usePreviewRenderer: PropTypes.func.isRequired,
+    startPresentation: PropTypes.func.isRequired,
+    stopPresentation: PropTypes.func.isRequired,
+    children: PropTypes.any.isRequired
+  };
+
   getShortcuts () {
     return {
       'page down': this.props.nextSlide,
@@ -28,13 +44,13 @@ export class Presentation extends React.Component {
     })
     this.props.startPresentation({
       slides: this.props.children
-    });
+    })
   }
 
   componentWillUnmount () {
     const shortcuts = this.getShortcuts()
     Object.keys(shortcuts).each((key) => keymaster.unbind(key))
-    this.props.stopPresentation();
+    this.props.stopPresentation()
   }
 
   getSizes () {
@@ -51,7 +67,7 @@ export class Presentation extends React.Component {
     var classNames = classes['react-presentation'] + ' ' + classes[renderer]
     return (
       <div className = {classNames}>
-        <Renderer sizes = {this.getSizes()} currentSlide = {this.props.children[this.props.currentIndex]} allSlides = {this.props.children}></Renderer>
+        <Renderer sizes = {this.getSizes()} currentSlide = {this.props.children[this.props.currentIndex]} allSlides = {this.props.children}/>
       </div>
     )
   }
