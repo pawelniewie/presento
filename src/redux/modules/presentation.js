@@ -3,17 +3,20 @@ import { createAction, handleActions } from 'redux-actions'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
 export const NEXT_SLIDE = 'NEXT_SLIDE'
 export const PREVIOUS_SLIDE = 'PREVIOUS_SLIDE'
 export const USE_SINGLE_RENDERER = 'USE_SINGLE_RENDERER'
 export const USE_BOOKLET_RENDERER = 'USE_BOOKLET_RENDERER'
 export const USE_PREVIEW_RENDERER = 'USE_PREVIEW_RENDERER'
+export const START_PRESENTATION = 'START_PRESENTATION'
+export const STOP_PRESENTATION = 'STOP_PRESENTATION'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const increment = createAction(COUNTER_INCREMENT, (value = 1) => value)
+export const startPresentation = createAction(START_PRESENTATION, (slides = []) => slides)
+
+export const stopPresentation = createAction(STOP_PRESENTATION)
 
 export const nextSlide = createAction(NEXT_SLIDE)
 
@@ -25,43 +28,43 @@ export const useBookletRenderer = createAction(USE_BOOKLET_RENDERER)
 
 export const usePreviewRenderer = createAction(USE_PREVIEW_RENDERER)
 
-// This is a thunk, meaning it is a function that immediately
-// returns a function for lazy evaluation. It is incredibly useful for
-// creating async actions, especially when combined with redux-thunk!
-// NOTE: This is solely for demonstration purposes. In a real application,
-// you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
-// reducer take care of this logic.
-export const doubleAsync = () => {
-  return (dispatch, getState) => {
-    setTimeout(() => {
-      dispatch(increment(getState().counter))
-    }, 1000)
-  }
-}
-
 export const actions = {
-  increment,
-  doubleAsync,
   nextSlide,
   previousSlide,
   useSingleRenderer,
   useBookletRenderer,
-  usePreviewRenderer
+  usePreviewRenderer,
+  startPresentation,
+  stopPresentation
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 export default handleActions({
-  [COUNTER_INCREMENT]: (state, { payload }) => state + payload,
-  [NEXT_SLIDE]: (state, { payload }) => state,
-  [PREVIOUS_SLIDE]: (state, { payload }) => state,
+  [NEXT_SLIDE]: (state, { payload }) => {
+    var nextSlide = state.currentIndex + 1
+    if (nextSlide >= state.allSlides.length) {
+      nextSlide = 0
+    }
+    return Object.assign({}, state, {currentSlide: state.allSlides[nextSlide], currentIndex: nextSlide})
+  },
+  [PREVIOUS_SLIDE]: (state, { payload }) => {
+    var previousSlide = state.currentIndex - 1
+    if (previousSlide < 0) {
+      previousSlide = state.allSlides.length - 1
+    }
+    return Object.assign({}, state, {currentSlide: state.allSlides[previousSlide], currentIndex: previousSlide})
+  },
   [USE_SINGLE_RENDERER]: (state, { payload }) => Object.assign({}, state, {renderer: 'single'}),
   [USE_BOOKLET_RENDERER]: (state, { payload }) => Object.assign({}, state, {renderer: 'booklet'}),
-  [USE_PREVIEW_RENDERER]: (state, { payload }) => Object.assign({}, state, {renderer: 'preview'})
+  [USE_PREVIEW_RENDERER]: (state, { payload }) => Object.assign({}, state, {renderer: 'preview'}),
+  [STOP_PRESENTATION]: (state, { payload }) => Object.assign({}, state, {allSlides: [], currentSlide: null, currentIndex: 0}),
+  [START_PRESENTATION]: (state, { payload }) => Object.assign({}, state, {allSlides: payload.slides, currentSlide: payload.slides[0], currentIndex: 0})
 }, {
   renderer: 'booklet',
-  slideIndex: 0,
+  currentIndex: 0,
+  currentSlide: null,
   allSlides: [],
   slideWidth: 1280,
   slideHeight: 768

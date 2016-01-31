@@ -13,16 +13,17 @@ import Slide from '../../components/Slide'
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
 const mapStateToProps = (state) => ({
   allSlides: state.presentation.allSlides,
-  slideIndex: state.presentation.slideIndex,
+  currentIndex: state.presentation.currentIndex,
+  currentSlide: state.presentation.currentSlide,
   slideWidth: state.presentation.slideWidth,
   slideHeight: state.presentation.slideHeight,
   renderer: state.presentation.renderer
 })
 export class GunPresoView extends React.Component {
   static propTypes = {
-    counter: PropTypes.number.isRequired,
-    doubleAsync: PropTypes.func.isRequired,
-    increment: PropTypes.func.isRequired
+    slideWidth: PropTypes.number.isRequired,
+    slideHeight: PropTypes.number.isRequired,
+    renderer: PropTypes.string.isRequired
   };
 
   render () {

@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 
 export default class Slide extends React.Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    className: PropTypes.string.isRequired,
+    id: PropTypes.string,
+    className: PropTypes.string,
     children: PropTypes.any
   };
 

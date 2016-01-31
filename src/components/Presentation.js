@@ -1,6 +1,4 @@
 import React from 'react'
-// var History = require('../modules/History.jsx')
-// var PrintStyles = require('../modules/PrintStyles.jsx')
 import renderers from './renderers/renderers'
 import keymaster from 'keymaster'
 import classes from './Presentation.scss'
@@ -9,15 +7,6 @@ import connectToResize from './Resizing'
 import connectPrintStyles from './PrintStyles'
 
 export class Presentation extends React.Component {
-  // normalizeChildren(children) {
-  //   var count = React.Children.count(children)
-  //   if (count === 0) {
-  //     throw new Error("Please add at least one slide")
-  //   }
-
-  //   return count === 1 ? [children] : children
-  // }
-
   getShortcuts () {
     return {
       'page down': this.props.nextSlide,
@@ -37,11 +26,15 @@ export class Presentation extends React.Component {
         shortcuts[shortcut]()
       })
     })
+    this.props.startPresentation({
+      slides: this.props.children
+    });
   }
 
   componentWillUnmount () {
     const shortcuts = this.getShortcuts()
     Object.keys(shortcuts).each((key) => keymaster.unbind(key))
+    this.props.stopPresentation();
   }
 
   getSizes () {
@@ -58,7 +51,7 @@ export class Presentation extends React.Component {
     var classNames = classes['react-presentation'] + ' ' + classes[renderer]
     return (
       <div className = {classNames}>
-        <Renderer sizes = {this.getSizes()} currentSlide = {this.props.children[this.props.slideIndex]} allSlides = {this.props.children}></Renderer>
+        <Renderer sizes = {this.getSizes()} currentSlide = {this.props.children[this.props.currentIndex]} allSlides = {this.props.children}></Renderer>
       </div>
     )
   }

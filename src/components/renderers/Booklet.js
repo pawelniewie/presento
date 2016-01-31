@@ -11,13 +11,13 @@ export default class Booklet extends React.Component {
 
   render () {
     var currentSlide = this.props.currentSlide
-    var slides = this.props.allSlides.map(slide => {
+    var slides = this.props.allSlides.map((slide, idx) => {
       var className = classNames({
         [classes['slide-wrapper']]: true,
         'current': (slide === currentSlide)
       })
       return (
-        <div className = {className} style = {this.props.sizes}>
+        <div key = {idx} className = {className} style = {this.props.sizes}>
           {slide}
         </div>
       )
