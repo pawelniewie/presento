@@ -5,11 +5,9 @@ import renderers from './renderers/renderers'
 import keymaster from 'keymaster'
 import classes from './Presentation.scss'
 import invariant from 'invariant'
-import connectToResize from '../mixins/Resizing'
+import connectToResize from './Resizing'
 
 export class Presentation extends React.Component {
-  // mixins: [FluxMixin, ResizingMixin, StoreWatchMixin("PresentationStore")],
-
   // normalizeChildren(children) {
   //   var count = React.Children.count(children)
   //   if (count === 0) {
