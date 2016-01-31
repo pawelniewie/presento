@@ -5,9 +5,9 @@ import renderers from './renderers/renderers'
 import keymaster from 'keymaster'
 import classes from './Presentation.scss'
 import invariant from 'invariant'
-// var ResizingMixin = require('../mixins/Resizing.jsx')
+import connectToResize from '../mixins/Resizing'
 
-export default class Presentation extends React.Component {
+export class Presentation extends React.Component {
   // mixins: [FluxMixin, ResizingMixin, StoreWatchMixin("PresentationStore")],
 
   // normalizeChildren(children) {
@@ -64,3 +64,6 @@ export default class Presentation extends React.Component {
     )
   }
 }
+
+export default connectToResize(Presentation)
+
