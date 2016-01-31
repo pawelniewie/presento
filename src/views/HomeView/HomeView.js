@@ -46,6 +46,7 @@ export class HomeView extends React.Component {
           Double (Async)
         </button>
         <hr />
+        <Link to='/gun-preso'>Jak zdobyć pozwolenie na broń?</Link><br/>
         <Link to='/404'>Go to 404 Page</Link>
       </div>
     )

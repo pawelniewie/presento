@@ -34,4 +34,7 @@ export const actions = {
 // ------------------------------------
 export default handleActions({
   [COUNTER_INCREMENT]: (state, { payload }) => state + payload
-}, 1)
+}, {
+  slideIndex: 0,
+  allSlides: []
+})
