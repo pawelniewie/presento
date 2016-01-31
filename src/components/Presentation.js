@@ -12,7 +12,9 @@ export class Presentation extends React.Component {
     slideWidth: PropTypes.number.isRequired,
     slideHeight: PropTypes.number.isRequired,
     currentIndex: PropTypes.number.isRequired,
-    currentSlide: PropTypes.element.isRequired,
+    currentSlide: PropTypes.element,
+    fetchTypeform: PropTypes.func.isRequired,
+    receiveTypeform: PropTypes.func.isRequired,
     nextSlide: PropTypes.func.isRequired,
     previousSlide: PropTypes.func.isRequired,
     useSingleRenderer: PropTypes.func.isRequired,
@@ -24,11 +26,21 @@ export class Presentation extends React.Component {
   };
 
   getShortcuts () {
+    const nextSlide = () => {
+      this.props.nextSlide()
+      this.props.fetchTypeform()
+    }
+
+    const previousSlide = () => {
+      this.props.previousSlide()
+      this.props.fetchTypeform()
+    }
+
     return {
-      'page down': this.props.nextSlide,
-      'right': this.props.nextSlide,
-      'page up': this.props.previousSlide,
-      'left': this.props.previousSlide,
+      'page down': nextSlide,
+      'right': nextSlide,
+      'page up': previousSlide,
+      'left': previousSlide,
       's': this.props.useSingleRenderer,
       'b': this.props.useBookletRenderer,
       'p': this.props.usePreviewRenderer

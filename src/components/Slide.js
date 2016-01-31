@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import classes from './Slide.scss'
 
 export default class Slide extends React.Component {
   static propTypes = {
@@ -8,7 +9,7 @@ export default class Slide extends React.Component {
   };
 
   render () {
-    var className = 'slide ' + this.props.className
+    var className = classes['slide'] + ' ' + this.props.className
 
     return (
       <div id = {this.props.id} className = {className}>

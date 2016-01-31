@@ -12,7 +12,9 @@
     "__PROD__"     : false,
     "__DEBUG__"    : false,
     "__DEBUG_NEW_WINDOW__" : false,
-    "__BASENAME__" : false
+    "__BASENAME__" : false,
+    "__TYPEFORM_KEY__" : false,
+    "__TYPEFORM_FORM_ID__" : false
   },
   "rules": {
     "semi" : [2, "never"]

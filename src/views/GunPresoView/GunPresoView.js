@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { actions as counterActions } from '../../redux/modules/presentation'
+import { actions as presentationActions } from '../../redux/modules/presentation'
 // import classes from './GunPresoView.scss'
 import Presentation from '../../components/Presentation'
 import Slide from '../../components/Slide'
@@ -49,4 +49,4 @@ export class GunPresoView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(GunPresoView)
+export default connect(mapStateToProps, presentationActions)(GunPresoView)

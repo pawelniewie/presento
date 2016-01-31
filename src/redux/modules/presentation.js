@@ -1,4 +1,5 @@
 import { createAction, handleActions } from 'redux-actions'
+import request from 'superagent'
 
 // ------------------------------------
 // Constants
@@ -10,6 +11,8 @@ export const USE_BOOKLET_RENDERER = 'USE_BOOKLET_RENDERER'
 export const USE_PREVIEW_RENDERER = 'USE_PREVIEW_RENDERER'
 export const START_PRESENTATION = 'START_PRESENTATION'
 export const STOP_PRESENTATION = 'STOP_PRESENTATION'
+export const FETCH_TYPEFORM = 'FETCH_TYPEFORM'
+export const RECEIVE_TYPEFORM = 'RECEIVE_TYPEFORM'
 
 // ------------------------------------
 // Actions
@@ -28,6 +31,23 @@ export const useBookletRenderer = createAction(USE_BOOKLET_RENDERER)
 
 export const usePreviewRenderer = createAction(USE_PREVIEW_RENDERER)
 
+export const receiveTypeform = createAction(RECEIVE_TYPEFORM)
+
+export const fetchTypeform = () => {
+  return (dispatch) => {
+    request
+      .get('https://api.typeform.io/v0.4/forms/' + __TYPEFORM_FORM_ID__)
+      .set('X-API-TOKEN', __TYPEFORM_KEY__)
+      .end((err, res) => {
+        if (res.ok) {
+          dispatch(receiveTypeform(res.body))
+        } else if (err) {
+          console.log('Error fetching data from Typeform')
+        }
+      })
+  }
+}
+
 export const actions = {
   nextSlide,
   previousSlide,
@@ -35,7 +55,9 @@ export const actions = {
   useBookletRenderer,
   usePreviewRenderer,
   startPresentation,
-  stopPresentation
+  stopPresentation,
+  fetchTypeform,
+  receiveTypeform
 }
 
 // ------------------------------------
